@@ -3,7 +3,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 from datetime import date, time
-
+from config import keys
 
 
 class APIException(Exception):
@@ -64,8 +64,8 @@ class GetLesson:
         # }
 
         data = {
-            'username': 'Skoraia6713904',
-            'password': 'f456Der34Wihg4',
+            'username': keys['username'],
+            'password': keys['password'],
             'return_uri': '/'
         }
 
