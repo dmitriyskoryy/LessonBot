@@ -37,7 +37,7 @@ class GetLesson:
             raise APIException(f"Не корректный параметр: {name}")
 
 
-        url_login = 'https://39school11.eljur.ru/?user=Skoraia6713904&domain=39school11'
+        url_login = f"https://39school11.eljur.ru/?user={keys['username']}&domain=39school11"
         url_main = 'https://39school11.eljur.ru/'
 
 
