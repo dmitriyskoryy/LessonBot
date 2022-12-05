@@ -1,14 +1,15 @@
 
 import requests
-import json
+
 from bs4 import BeautifulSoup
-from datetime import date, time
+from datetime import date
 from config import keys
+
+
 
 
 class APIException(Exception):
     pass
-
 
 
 class GetLesson:
@@ -42,8 +43,6 @@ class GetLesson:
 
 
 
-
-
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,'
                       'application/signed-exchange;v=b3;q=0.9',
@@ -54,14 +53,6 @@ class GetLesson:
             'Connection': 'keep-alive',
         }
 
-        # headers = {
-        #     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        #     'Accept-Encoding': 'gzip, deflate, br',
-        #     'Accept-Language': 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
-        #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)  Safari/537.36',
-        #     'Referer': url_main,
-        #     'Connection': 'keep-alive',
-        # }
 
         data = {
             'username': keys['username'],
@@ -72,18 +63,14 @@ class GetLesson:
         s = requests.Session()
         d = s.post(url_login, data=data, headers=headers).text
 
-
-
         dd = s.get(url_user)
 
         soup = BeautifulSoup(dd.text, "html.parser")
         # soup = BeautifulSoup(dd.text, "lxml")
 
-
         now_day = soup.find("div", class_="dnevnik").find_all("div", class_="dnevnik-day")[day_number]
 
         lessons = now_day.find("div", class_="dnevnik-day__lessons")
-
 
         list_lesson = []
 
@@ -93,11 +80,10 @@ class GetLesson:
                 lesson_task = lesson.find("div", class_="dnevnik-lesson__hometask").find("div", class_="dnevnik-lesson__task").text.strip()
                 list_lesson.append(f'{str(lesson_name).upper()}: {lesson_task}')
 
-
-
             except:
                 lesson_name = "No"
                 lesson_task = "No"
 
-
         return list_lesson
+
+
